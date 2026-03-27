@@ -81,7 +81,7 @@ const Askqu = () => {
     };
 
     return (
-        <section id="faq" className="py-16 md:py-24 px-4 md:px-6">
+        <section className="py-16 md:py-24 px-4 md:px-6">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <motion.div 

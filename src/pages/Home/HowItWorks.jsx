@@ -44,7 +44,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 px-4 md:px-6 bg-slate-50">
+    <section className="py-16 md:py-24 px-4 md:px-6 bg-slate-50">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div

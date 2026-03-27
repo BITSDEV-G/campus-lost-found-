@@ -47,10 +47,9 @@ const PublicNavbar = () => {
     const mainLinks = (
         <>
             <li><NavLink to="/" className={navLinkClass}>Home</NavLink></li>
-            <li><NavLink to="#features" className={navLinkClass}>Features</NavLink></li>
-            <li><NavLink to="#how-it-works" className={navLinkClass}>How It Works</NavLink></li>
-            <li><NavLink to="#about" className={navLinkClass}>About</NavLink></li>
-            <li><NavLink to="#faq" className={navLinkClass}>FAQ</NavLink></li>
+            <li><NavLink to="/features" className={navLinkClass}>Features</NavLink></li>
+            <li><NavLink to="/services" className={navLinkClass}>Services</NavLink></li>
+            <li><NavLink to="/faq" className={navLinkClass}>FAQ</NavLink></li>
             <li><NavLink to="/contact" className={navLinkClass}>Contact</NavLink></li>
         </>
     );
@@ -58,10 +57,9 @@ const PublicNavbar = () => {
     const mobileMainLinks = (
         <>
             <li><NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>Home</NavLink></li>
-            <li><NavLink to="#features" className={mobileNavLinkClass} onClick={closeMenu}>Features</NavLink></li>
-            <li><NavLink to="#how-it-works" className={mobileNavLinkClass} onClick={closeMenu}>How It Works</NavLink></li>
-            <li><NavLink to="#about" className={mobileNavLinkClass} onClick={closeMenu}>About</NavLink></li>
-            <li><NavLink to="#faq" className={mobileNavLinkClass} onClick={closeMenu}>FAQ</NavLink></li>
+            <li><NavLink to="/features" className={mobileNavLinkClass} onClick={closeMenu}>Features</NavLink></li>
+            <li><NavLink to="/services" className={mobileNavLinkClass} onClick={closeMenu}>Services</NavLink></li>
+            <li><NavLink to="/faq" className={mobileNavLinkClass} onClick={closeMenu}>FAQ</NavLink></li>
             <li><NavLink to="/contact" className={mobileNavLinkClass} onClick={closeMenu}>Contact</NavLink></li>
         </>
     );

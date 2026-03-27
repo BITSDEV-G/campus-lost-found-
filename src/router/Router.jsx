@@ -18,6 +18,9 @@ import UpdateItems from "../pages/UpdateItems/UpdateItems";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import Contact from "../pages/Contact/Contact";
+import FeaturesPage from "../pages/Features/FeaturesPage";
+import ServicesPage from "../pages/Services/ServicesPage";
+import FAQPage from "../pages/FAQ/FAQPage";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import AdminInventory from "../pages/Admin/AdminInventory";
 import AdminClaims from "../pages/Admin/AdminClaims";
@@ -162,6 +165,18 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path: '/features',
+        element: <FeaturesPage />
+      },
+      {
+        path: '/services',
+        element: <ServicesPage />
+      },
+      {
+        path: '/faq',
+        element: <FAQPage />
       },
       {
         path: '/aboutUs',
