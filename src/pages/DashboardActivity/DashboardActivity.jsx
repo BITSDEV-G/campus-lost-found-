@@ -51,9 +51,9 @@ const DashboardActivity = () => {
           title: item.title,
           description: `Posted ${item.itemType} item`,
           icon: FaBox,
-          bgColor: 'bg-blue-100',
-          textColor: 'text-blue-700',
-          iconBg: 'bg-blue-600',
+          bgColor: 'bg-emerald-100',
+          textColor: 'text-emerald-700',
+          iconBg: 'bg-emerald-600',
           date: item.createdAt,
           details: `Category: ${item.category}`
         })),
