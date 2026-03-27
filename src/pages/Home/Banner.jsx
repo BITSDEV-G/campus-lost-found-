@@ -80,23 +80,29 @@ const Banner = memo(function Banner() {
 
   return (
     <section className="px-4 py-6 md:px-6 md:py-10">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-[0_10px_40px_rgba(2,6,23,0.04)]">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-emerald-500/20 bg-emerald-600 shadow-[0_14px_45px_rgba(16,185,129,0.18)]">
         <Slider {...settings} className="banner-slider">
           {slides.map((slide) => (
             <div key={slide.id}>
-              <div className="bg-gradient-to-r from-white via-emerald-50/70 to-emerald-100/40 px-5 py-8 md:px-10 md:py-12 lg:px-14 lg:py-16">
-                <div className="flex min-h-[320px] flex-col items-center justify-between gap-8 md:min-h-[440px] md:flex-row md:gap-10">
+              <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-600 to-emerald-700 px-5 py-8 md:px-10 md:py-12 lg:px-14 lg:py-16">
+                {/* soft background accents */}
+                <div className="pointer-events-none absolute inset-0">
+                  <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
+                  <div className="absolute right-0 bottom-0 h-56 w-56 rounded-full bg-emerald-300/10 blur-3xl" />
+                </div>
+
+                <div className="relative flex min-h-[320px] flex-col items-center justify-between gap-8 md:min-h-[440px] md:flex-row md:gap-10">
                   <div className="w-full md:w-1/2">
                     <div className="max-w-xl">
-                      <span className="mb-4 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 md:text-sm">
+                      <span className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-50 md:text-sm">
                         Campus Lost &amp; Found
                       </span>
 
-                      <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+                      <h1 className="text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl">
                         {slide.title}
                       </h1>
 
-                      <p className="mt-4 max-w-lg text-sm leading-7 text-slate-600 md:mt-5 md:text-base lg:text-lg">
+                      <p className="mt-4 max-w-lg text-sm leading-7 text-emerald-50/90 md:mt-5 md:text-base lg:text-lg">
                         {slide.description}
                       </p>
 
@@ -104,7 +110,7 @@ const Banner = memo(function Banner() {
                         <button
                           type="button"
                           onClick={handleReport}
-                          className="inline-flex h-12 items-center justify-center rounded-xl bg-emerald-600 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 md:px-6 md:text-base"
+                          className="inline-flex h-12 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-emerald-700 transition-colors duration-200 hover:bg-emerald-50 focus:outline-none focus:ring-4 focus:ring-white/20 md:px-6 md:text-base"
                         >
                           Report Lost Item
                         </button>
@@ -112,7 +118,7 @@ const Banner = memo(function Banner() {
                         <button
                           type="button"
                           onClick={handleBrowse}
-                          className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition-colors duration-200 hover:border-emerald-200 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100 md:px-6 md:text-base"
+                          className="inline-flex h-12 items-center justify-center rounded-xl border border-white/25 bg-white/10 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white/15 focus:outline-none focus:ring-4 focus:ring-white/10 md:px-6 md:text-base"
                         >
                           Browse Found Items
                         </button>
@@ -121,7 +127,7 @@ const Banner = memo(function Banner() {
                   </div>
 
                   <div className="flex w-full items-center justify-center md:w-1/2">
-                    <div className="banner-animation-wrap flex h-[240px] w-[240px] items-center justify-center rounded-full border border-white/70 bg-white/95 p-4 shadow-[0_12px_35px_rgba(16,185,129,0.08)] sm:h-[280px] sm:w-[280px] md:h-[340px] md:w-[340px] md:p-6">
+                    <div className="banner-animation-wrap flex h-[240px] w-[240px] items-center justify-center rounded-full border border-white/20 bg-white/10 p-4 shadow-[0_12px_35px_rgba(0,0,0,0.08)] backdrop-blur-sm sm:h-[280px] sm:w-[280px] md:h-[340px] md:w-[340px] md:p-6">
                       <Lottie
                         animationData={slide.animation}
                         loop
@@ -175,12 +181,12 @@ const Banner = memo(function Banner() {
 
         .banner-slider .slick-dots li button:before {
           font-size: 10px;
-          color: #10b981;
-          opacity: 0.28;
+          color: #ffffff;
+          opacity: 0.35;
         }
 
         .banner-slider .slick-dots li.slick-active button:before {
-          color: #059669;
+          color: #ffffff;
           opacity: 1;
         }
 
