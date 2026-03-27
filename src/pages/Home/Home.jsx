@@ -1,5 +1,4 @@
 import React from 'react';
-import LatesItems from './LatesItems';
 import Banner from './Banner';
 import AskQu from './Askqu';
 import Newsletter from './Newsletter';
@@ -14,7 +13,6 @@ const Home = () => {
                 <title>{`Home - ${schoolConfig.name} Lost & Found`}</title>
             </Helmet>
            <section><Banner/></section>
-           <section><LatesItems/></section>
            <section><Reviews/></section>
            <section><AskQu/></section>
            <section><Newsletter/></section>

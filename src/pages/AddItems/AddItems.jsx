@@ -74,7 +74,7 @@ const AddItems = () => {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    navigate('/allItems');
+                    navigate('/app/my-items');
                 } else {
                     throw new Error('Unexpected response from server');
                 }

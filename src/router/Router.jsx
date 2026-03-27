@@ -11,8 +11,6 @@ import Home from "../pages/Home/Home";
 import DashboardHome from "../pages/DashboardHome/DashboardHome";
 import Register from "../pages/Register/Register";
 import Signin from "../pages/Signin/Signin";
-import AddItems from "../pages/AddItems/AddItems";
-import AllItems from "../pages/AllItems/AllItems";
 import PostDetails from "../pages/PostDetails/PostDetails";
 import MyItemsPage from "../pages/MyItemsPage/MyItemsPage";
 import AllRecoveredItems from "../pages/AllRecovered/AllRecoveredItems";
@@ -180,13 +178,7 @@ const router = createBrowserRouter([
         path: '/search',
         element: <SearchItems />,
       },
-      {
-        path: '/allItems',
-        element: <AllItems />,
-        loader: () => fetch('http://localhost:3001/api/items').then(res => res.json()).then(data => {
-          return Array.isArray(data) ? data : data.data || [];
-        })
-      },
+
       {
         path: "/items/:id",
         element: <PrivateRoute><PostDetails /></PrivateRoute>,

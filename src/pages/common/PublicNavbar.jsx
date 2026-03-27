@@ -47,7 +47,6 @@ const PublicNavbar = () => {
     const mainLinks = (
         <>
             <li><NavLink to="/" className={navLinkClass}>Home</NavLink></li>
-            <li><NavLink to="/allItems" className={navLinkClass}>Lost &amp; Found Items</NavLink></li>
             <li><NavLink to="/aboutUs" className={navLinkClass}>About Us</NavLink></li>
             <li><NavLink to="/contact" className={navLinkClass}>Contact</NavLink></li>
         </>
@@ -56,7 +55,6 @@ const PublicNavbar = () => {
     const mobileMainLinks = (
         <>
             <li><NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>Home</NavLink></li>
-            <li><NavLink to="/allItems" className={mobileNavLinkClass} onClick={closeMenu}>Lost &amp; Found Items</NavLink></li>
             <li><NavLink to="/aboutUs" className={mobileNavLinkClass} onClick={closeMenu}>About Us</NavLink></li>
             <li><NavLink to="/contact" className={mobileNavLinkClass} onClick={closeMenu}>Contact</NavLink></li>
         </>
