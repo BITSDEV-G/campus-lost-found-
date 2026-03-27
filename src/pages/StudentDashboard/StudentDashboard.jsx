@@ -24,6 +24,7 @@ const StudentDashboard = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [replyContent, setReplyContent] = useState('');
   const [loading, setLoading] = useState(true);
+  const [recoveredItems, setRecoveredItems] = useState([]);
 
   useEffect(() => {
     if (!user) {
@@ -57,6 +58,17 @@ const StudentDashboard = () => {
         setClaims(claimsData);
         setMessages(messagesData);
         setItemsFound(itemsData);
+
+        // Fetch recovered items (items where user is the owner and status is recovered)
+        try {
+          const recoveredRes = await axios.get('http://localhost:3001/api/items', {
+            params: { status: 'recovered', ownerEmail: user.email },
+            withCredentials: true
+          }).catch(() => ({ data: [] }));
+          setRecoveredItems((recoveredRes.data || []).slice(0, 5));
+        } catch (err) {
+          console.error('[v0] Error fetching recovered items:', err);
+        }
 
         setUserStats({
           claimsSubmitted: claimsData.length,
@@ -161,7 +173,7 @@ const StudentDashboard = () => {
           </div>
           <div className="flex gap-3 items-center">
             <Link 
-              to="/user-profile" 
+              to="/profile" 
               className="btn btn-sm btn-outline border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white"
             >
               <FaUser /> Profile
@@ -262,7 +274,7 @@ const StudentDashboard = () => {
               <h2 className="text-xl font-bold text-teal-600 mb-4">Quick Actions</h2>
               <div className="flex flex-wrap gap-3">
                 <Link 
-                  to="/search-items" 
+                  to="/search" 
                   className="btn bg-teal-600 hover:bg-teal-700 text-white btn-sm"
                 >
                   <FaSearch /> Search Lost Items
@@ -280,7 +292,7 @@ const StudentDashboard = () => {
                   <FaEnvelope /> Check Messages
                 </button>
                 <Link 
-                  to="/notification-settings" 
+                  to="/settings/notifications" 
                   className="btn btn-outline border-gray-400 text-gray-600 hover:bg-gray-100 btn-sm"
                 >
                   <FaBell /> Notifications
@@ -311,6 +323,54 @@ const StudentDashboard = () => {
                 </div>
               </div>
             )}
+
+            {/* Browse All Recovered Items CTA */}
+            <div className="bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl shadow-lg p-6 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">Browse Campus Found Items</h2>
+                  <p className="text-teal-100">Check out items other students have found on campus</p>
+                </div>
+                <Link 
+                  to="/allRecovered" 
+                  className="btn bg-white text-teal-600 hover:bg-gray-100 btn-lg"
+                >
+                  <FaEye /> View All Items
+                </Link>
+              </div>
+            </div>
+
+            {/* Recent Recovered Items */}
+            {recoveredItems.length > 0 && (
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold text-teal-600">Recently Recovered</h2>
+                  <Link to="/allRecovered" className="text-teal-600 text-sm font-semibold hover:underline">
+                    View All →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                  {recoveredItems.map(item => (
+                    <Link key={item._id} to={`/items/${item._id}`} className="group">
+                      <div className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                        {item.images?.[0] && (
+                          <img 
+                            src={item.images[0]} 
+                            alt={item.title}
+                            className="w-full h-32 object-cover group-hover:opacity-90 transition-opacity"
+                          />
+                        )}
+                        <div className="p-3">
+                          <h3 className="font-semibold text-gray-900 text-sm truncate group-hover:text-teal-600">{item.title}</h3>
+                          <p className="text-xs text-gray-600">{item.category}</p>
+                          <span className="badge badge-success badge-sm mt-2">Recovered</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -320,7 +380,7 @@ const StudentDashboard = () => {
             <h2 className="text-xl font-bold text-teal-600 mb-4">Search for Lost Items</h2>
             <p className="text-gray-600 mb-4">Looking for your lost item? Use the search page to browse all reported found items.</p>
             <Link 
-              to="/search-items" 
+              to="/search" 
               className="btn bg-teal-600 hover:bg-teal-700 text-white"
             >
               <FaSearch /> Go to Search
@@ -337,7 +397,7 @@ const StudentDashboard = () => {
               <div className="text-center py-12">
                 <FaClipboard className="text-6xl text-gray-300 mx-auto mb-4" />
                 <p className="text-gray-600 mb-4">No claims yet</p>
-                <Link to="/search-items" className="btn bg-teal-600 text-white">
+                <Link to="/search" className="btn bg-teal-600 text-white">
                   Search for Items
                 </Link>
               </div>
@@ -370,10 +430,10 @@ const StudentDashboard = () => {
                       {claim.status === 'pending' && (
                         <>
                           <Link 
-                            to={`/claim/${claim._id}`}
+                            to={`/items/${claim.itemId}`}
                             className="btn btn-xs btn-info text-white"
                           >
-                            View Details
+                            View Item
                           </Link>
                           <button 
                             onClick={() => handleWithdrawClaim(claim._id)}
@@ -524,7 +584,7 @@ const StudentDashboard = () => {
                         <FaEye /> View
                       </Link>
                       <Link 
-                        to={`/update-item/${item._id}`}
+                        to={`/update/${item._id}`}
                         className="btn btn-xs btn-outline border-teal-600 text-teal-600"
                       >
                         Edit
