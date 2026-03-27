@@ -90,8 +90,8 @@ const Banner = () => {
                   <Lottie className="w-full max-w-xs" animationData={slide.animation} loop={true} />
                 </motion.div>
               </div>
-            </motion.div>
-          </div>
+              </motion.div>
+            </div>
         ))}
       </Slider>
     </div>
