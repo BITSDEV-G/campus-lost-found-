@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import Lottie from 'lottie-react';
@@ -6,7 +6,6 @@ import Lottie from 'lottie-react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-// Import your Lottie JSON animations
 import animation1 from '../../assets/slide2.json';
 import animation2 from '../../assets/slide4.json';
 import animation3 from '../../assets/slide3.json';
@@ -45,11 +44,20 @@ const slidesData = [
 
 const Banner = memo(function Banner() {
   const navigate = useNavigate();
+
+  const handleReport = useCallback(() => {
+    navigate('/app/post-item');
+  }, [navigate]);
+
+  const handleBrowse = useCallback(() => {
+    navigate('/signin');
+  }, [navigate]);
+
   const settings = useMemo(
     () => ({
       dots: true,
       infinite: true,
-      speed: 650,
+      speed: 600,
       slidesToShow: 1,
       slidesToScroll: 1,
       autoplay: true,
@@ -63,6 +71,7 @@ const Banner = memo(function Banner() {
       cssEase: 'cubic-bezier(0.22, 1, 0.36, 1)',
       lazyLoad: 'ondemand',
       adaptiveHeight: false,
+      accessibility: true,
     }),
     []
   );
@@ -75,13 +84,12 @@ const Banner = memo(function Banner() {
         <Slider {...settings} className="banner-slider">
           {slides.map((slide) => (
             <div key={slide.id}>
-              <div className="bg-gradient-to-r from-white via-emerald-50/60 to-emerald-100/40 px-5 py-8 md:px-10 md:py-12 lg:px-14 lg:py-16">
+              <div className="bg-gradient-to-r from-white via-emerald-50/70 to-emerald-100/40 px-5 py-8 md:px-10 md:py-12 lg:px-14 lg:py-16">
                 <div className="flex min-h-[320px] flex-col items-center justify-between gap-8 md:min-h-[440px] md:flex-row md:gap-10">
-                  {/* Text Content */}
                   <div className="w-full md:w-1/2">
                     <div className="max-w-xl">
                       <span className="mb-4 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 md:text-sm">
-                        Campus Lost & Found
+                        Campus Lost &amp; Found
                       </span>
 
                       <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
@@ -95,16 +103,16 @@ const Banner = memo(function Banner() {
                       <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
                         <button
                           type="button"
-                          onClick={() => navigate('/app/post-item')}
-                          className="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-300 md:text-base"
+                          onClick={handleReport}
+                          className="inline-flex h-12 items-center justify-center rounded-xl bg-emerald-600 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 md:px-6 md:text-base"
                         >
                           Report Lost Item
                         </button>
 
                         <button
                           type="button"
-                          onClick={() => navigate('/signin')}
-                          className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition-colors duration-200 hover:border-emerald-200 hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-200 md:text-base"
+                          onClick={handleBrowse}
+                          className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition-colors duration-200 hover:border-emerald-200 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100 md:px-6 md:text-base"
                         >
                           Browse Found Items
                         </button>
@@ -112,9 +120,8 @@ const Banner = memo(function Banner() {
                     </div>
                   </div>
 
-                  {/* Animation */}
                   <div className="flex w-full items-center justify-center md:w-1/2">
-                    <div className="banner-animation-wrap flex h-[240px] w-[240px] items-center justify-center rounded-full border border-white/70 bg-white/90 p-4 shadow-[0_12px_35px_rgba(16,185,129,0.08)] backdrop-blur-sm sm:h-[280px] sm:w-[280px] md:h-[340px] md:w-[340px] md:p-6">
+                    <div className="banner-animation-wrap flex h-[240px] w-[240px] items-center justify-center rounded-full border border-white/70 bg-white/95 p-4 shadow-[0_12px_35px_rgba(16,185,129,0.08)] sm:h-[280px] sm:w-[280px] md:h-[340px] md:w-[340px] md:p-6">
                       <Lottie
                         animationData={slide.animation}
                         loop
@@ -180,9 +187,9 @@ const Banner = memo(function Banner() {
         .banner-animation-wrap,
         .banner-lottie {
           transform: translateZ(0);
+          will-change: transform;
           backface-visibility: hidden;
           -webkit-backface-visibility: hidden;
-          will-change: transform;
         }
 
         .banner-slider * {
