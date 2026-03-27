@@ -1,74 +1,82 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { memo, useCallback } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const BottomCTA = () => {
+const BottomCTA = memo(function BottomCTA() {
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
+
+  const handleRegister = useCallback(() => {
+    navigate('/register');
+  }, [navigate]);
+
+  const handleSignin = useCallback(() => {
+    navigate('/signin');
+  }, [navigate]);
+
+  const sectionAnimation = shouldReduceMotion
+    ? {}
+    : {
+      initial: { opacity: 0, y: 20 },
+      whileInView: { opacity: 1, y: 0 },
+      transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+    };
 
   return (
-    <section className="py-16 md:py-24 px-4 md:px-6">
-      <div className="max-w-4xl mx-auto">
+    <section className="px-4 py-16 md:px-6 md:py-24">
+      <div className="mx-auto max-w-4xl">
         <motion.div
-          className="bg-white rounded-2xl border border-slate-200 p-8 md:p-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-10 text-center shadow-[0_16px_40px_rgba(15,23,42,0.05)] md:px-10 md:py-14 lg:px-16"
+          viewport={{ once: true, amount: 0.25 }}
+          {...sectionAnimation}
         >
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-          >
-            Ready to Get Started?
-          </motion.h2>
+          {/* soft background accents */}
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-12 -left-10 h-40 w-40 rounded-full bg-emerald-100/60 blur-3xl" />
+            <div className="absolute right-0 bottom-0 h-44 w-44 rounded-full bg-slate-100/70 blur-3xl" />
+          </div>
 
-          <motion.p
-            className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            Join thousands of students and staff who have already recovered their lost items or helped others. Sign up today and become part of our community.
-          </motion.p>
+          <div className="relative mx-auto max-w-2xl">
+            <span className="mb-4 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 md:text-sm">
+              Join the Community
+            </span>
 
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <button
-              onClick={() => navigate('/register')}
-              className="px-8 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors duration-300"
-            >
-              Create Account
-            </button>
-            <button
-              onClick={() => navigate('/signin')}
-              className="px-8 py-3 border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors duration-300"
-            >
-              Sign In
-            </button>
-          </motion.div>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+              Ready to Get Started?
+            </h2>
 
-          <motion.p
-            className="text-slate-500 text-sm mt-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
-            It's free and takes less than a minute to sign up
-          </motion.p>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-lg">
+              Join students and staff who have already recovered lost items or
+              helped others return them. Create your account today and become
+              part of a trusted campus community.
+            </p>
+
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+              <button
+                type="button"
+                onClick={handleRegister}
+                className="inline-flex h-12 items-center justify-center rounded-xl bg-emerald-600 px-6 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 md:px-8 md:text-base"
+              >
+                Create Account
+              </button>
+
+              <button
+                type="button"
+                onClick={handleSignin}
+                className="inline-flex h-12 items-center justify-center rounded-xl border border-emerald-600 bg-white px-6 text-sm font-semibold text-emerald-600 transition-colors duration-200 hover:bg-emerald-50 focus:outline-none focus:ring-4 focus:ring-emerald-100 md:px-8 md:text-base"
+              >
+                Sign In
+              </button>
+            </div>
+
+            <p className="mt-6 text-sm text-slate-500">
+              It&apos;s free and takes less than a minute to sign up.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
   );
-};
+});
 
 export default BottomCTA;
