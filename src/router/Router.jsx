@@ -28,6 +28,7 @@ import NotificationSettings from "../pages/Settings/NotificationSettings";
 import CampusDirectory from "../pages/Directory/CampusDirectory";
 import UserProfile from "../pages/UserProfile/UserProfile";
 import SearchItems from "../pages/SearchItems/SearchItems";
+import AddItems from "../pages/AddItems/AddItems";
 import DashboardSearch from "../pages/DashboardSearch/DashboardSearch";
 import DashboardMessages from "../pages/DashboardMessages/DashboardMessages";
 import DashboardActivity from "../pages/DashboardActivity/DashboardActivity";
