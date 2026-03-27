@@ -351,12 +351,6 @@ const PostDetails = () => {
             </button>
           </div>
         )}
-              className="w-full md:w-auto px-6 py-3 text-white bg-teal-600 hover:bg-teal-700 rounded-lg shadow-lg hover:shadow-xl transition font-medium"
-            >
-              {item.itemType === 'lost' ? 'Found This Item!' : 'Claim This Item'}
-            </button>
-          </div>
-        )}
 
         {/* Owner-Only Actions */}
         {isItemOwner && (
