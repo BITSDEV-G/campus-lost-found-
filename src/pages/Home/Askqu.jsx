@@ -81,72 +81,52 @@ const Askqu = () => {
     };
 
     return (
-        <div className="min-h-screen py-16 px-4" style={{ background: 'linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%)' }}>
+        <section id="faq" className="py-16 md:py-24 px-4 md:px-6">
             <div className="max-w-5xl mx-auto">
-                {/* Header with Logo */}
+                {/* Header */}
                 <motion.div 
                     className="text-center mb-14"
                     initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    <div className="flex items-center justify-center gap-4 mb-4">
-                        <motion.div
-                          className="p-3 rounded-full"
-                          style={{
-                            background: 'linear-gradient(135deg, #047857 0%, #10b981 100%)',
-                            boxShadow: '0 8px 16px rgba(16, 185, 129, 0.2)'
-                          }}
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <img src="/zetech-logo.svg" alt="Zetech" className="h-8 w-8 object-contain" />
-                        </motion.div>
-                        <h1 className="text-4xl md:text-5xl font-bold" style={{
-                            background: 'linear-gradient(135deg, #047857 0%, #059669 50%, #10b981 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            backgroundClip: 'text'
-                        }}>
-                            FAQs
-                        </h1>
-                    </div>
-                    <motion.p 
-                      className="text-lg text-slate-600 max-w-2xl mx-auto font-medium"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.1, duration: 0.5 }}
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                        Frequently Asked Questions
+                    </h2>
+                    <p 
+                      className="text-lg text-slate-600 max-w-2xl mx-auto"
                     >
-                        Find answers to common questions about reporting and claiming items
-                    </motion.p>
+                        Everything you need to know about reporting and claiming items on our platform
+                    </p>
                 </motion.div>
 
                 {/* Category Tabs */}
                 <motion.div 
-                    className="flex flex-wrap justify-center gap-3 mb-12"
+                    className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10"
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ delay: 0.1, duration: 0.4 }}
                 >
                     {categories.map((category) => {
                         const Icon = category.icon;
                         return (
-                            <motion.button
+                            <button
                                 key={category.id}
                                 onClick={() => {
                                     setActiveCategory(category.id);
                                     setExpandedItem(0);
                                 }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                                className={`flex items-center gap-2 px-4 md:px-5 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${
                                     activeCategory === category.id
-                                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg'
-                                        : 'bg-white text-slate-700 border border-slate-200 hover:border-green-300'
+                                        ? 'bg-emerald-600 text-white shadow-md'
+                                        : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-300'
                                 }`}
                             >
                                 <Icon className="text-base" />
                                 <span className="hidden sm:inline">{category.label}</span>
-                            </motion.button>
+                            </button>
                         );
                     })}
                 </motion.div>
@@ -156,37 +136,34 @@ const Askqu = () => {
                     {faqs[activeCategory].map((item, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, y: 8 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: index * 0.05, duration: 0.3 }}
                             className="group"
                         >
-                            <motion.button
+                            <button
                                 onClick={() => setExpandedItem(expandedItem === index ? -1 : index)}
-                                whileHover={{ boxShadow: '0 4px 16px rgba(16, 185, 129, 0.1)' }}
-                                className="w-full text-left p-5 bg-white rounded-xl shadow-sm transition-all duration-300"
-                                style={{
-                                    border: '1px solid rgba(16, 185, 129, 0.15)'
-                                }}
+                                className="w-full text-left p-5 bg-white rounded-lg border border-slate-200 hover:border-emerald-300 transition-all duration-300 hover:shadow-sm"
                             >
-                                <div className="flex items-start justify-between gap-3">
+                                <div className="flex items-start justify-between gap-4">
                                     <div className="flex gap-3 items-start flex-grow">
-                                        <div className="p-2 rounded-lg mt-0.5" style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
-                                            <FaQuestion className="text-green-600 text-base" />
+                                        <div className="p-2 rounded-lg mt-0.5 bg-emerald-50 flex-shrink-0">
+                                            <FaQuestion className="text-emerald-600 text-sm" />
                                         </div>
-                                        <h3 className="text-base font-semibold text-slate-900 group-hover:text-green-600 transition-colors">
+                                        <h3 className="text-base font-semibold text-slate-900">
                                             {item.question}
                                         </h3>
                                     </div>
                                     <motion.div
                                         animate={{ rotate: expandedItem === index ? 180 : 0 }}
                                         transition={{ duration: 0.2 }}
-                                        className="flex-shrink-0"
+                                        className="flex-shrink-0 pt-1"
                                     >
-                                        <FaChevronDown className="text-green-600 text-base" />
+                                        <FaChevronDown className="text-emerald-600 text-base" />
                                     </motion.div>
                                 </div>
-                            </motion.button>
+                            </button>
 
                             <motion.div
                                 initial={false}
@@ -197,7 +174,7 @@ const Askqu = () => {
                                 transition={{ duration: 0.2 }}
                                 className="overflow-hidden"
                             >
-                                <div className="px-5 py-4 bg-gradient-to-r from-green-50 to-emerald-50 text-sm text-slate-700 rounded-b-xl border-t border-green-100">
+                                <div className="px-5 py-4 bg-slate-50 text-sm text-slate-700 rounded-b-lg border-t border-slate-200">
                                     {item.answer}
                                 </div>
                             </motion.div>
@@ -207,54 +184,33 @@ const Askqu = () => {
 
                 {/* Contact CTA */}
                 <motion.div 
-                    className="mt-16 p-8 rounded-2xl text-white text-center overflow-hidden relative"
+                    className="mt-12 p-8 md:p-10 rounded-xl bg-emerald-600 text-white text-center"
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ delay: 0.2, duration: 0.4 }}
-                    style={{
-                        background: 'linear-gradient(135deg, #047857 0%, #059669 50%, #10b981 100%)',
-                        boxShadow: '0 12px 32px rgba(16, 185, 129, 0.25)'
-                    }}
                 >
-                    <div className="relative z-10">
-                        <motion.h3 
-                          className="text-2xl font-bold mb-2"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.3 }}
+                    <h3 className="text-2xl font-bold mb-2">Didn&apos;t find your answer?</h3>
+                    <p className="mb-6 text-emerald-100">
+                        Our support team is here to help. Get in touch with any questions.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a 
+                          href="/contact"
+                          className="px-6 py-2.5 bg-white text-emerald-600 rounded-lg font-semibold transition-colors duration-300 hover:bg-emerald-50"
                         >
-                            Didn't find your answer?
-                        </motion.h3>
-                        <motion.p 
-                          className="mb-6 text-base text-green-50 font-medium"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.35 }}
+                            Contact Support
+                        </a>
+                        <a 
+                          href="mailto:support@zetech.ac.ke"
+                          className="px-6 py-2.5 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-colors duration-300"
                         >
-                            Our support team is here to help you
-                        </motion.p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <motion.a 
-                              href="/contact"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="px-6 py-3 bg-white text-green-600 rounded-xl font-semibold text-base transition-all duration-300"
-                            >
-                                Contact Support
-                            </motion.a>
-                            <motion.a 
-                              href="mailto:support@zetech.ac.ke"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="px-6 py-3 border-2 border-white text-white rounded-xl font-semibold text-base hover:bg-white/10 transition-all duration-300"
-                            >
-                                Email Us
-                            </motion.a>
-                        </div>
+                            Email Us
+                        </a>
                     </div>
                 </motion.div>
             </div>
-        </div>
+        </section>
     );
 };
 

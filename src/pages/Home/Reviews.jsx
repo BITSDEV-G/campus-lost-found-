@@ -86,40 +86,34 @@ const Reviews = () => {
     );
 
     return (
-        <div className="container mx-auto px-4 md:px-6 py-12 md:py-16 mb-12">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-16 md:py-24">
             {/* Header Section */}
             <motion.div
                 className="text-center mb-14"
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.5 }}
             >
                 <motion.h2 
-                  className="text-4xl md:text-5xl font-bold mb-3"
-                  style={{
-                    background: 'linear-gradient(135deg, #047857 0%, #059669 50%, #10b981 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                  }}
+                  className="text-3xl md:text-4xl font-bold text-slate-900 mb-3"
                 >
-                  Student Testimonials
+                  What Our Community Says
                 </motion.h2>
                 <motion.p 
-                  className="text-lg text-slate-600 font-medium max-w-2xl mx-auto"
+                  className="text-lg text-slate-600 max-w-2xl mx-auto"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  Hear from Zetech students who've successfully recovered their lost items through our platform.
+                  Real experiences from Zetech students who have successfully recovered their lost items.
                 </motion.p>
             </motion.div>
 
             {/* Slider Container */}
             <div className="relative overflow-hidden">
                 <div
-                    className="flex transition-transform duration-700 ease-in-out"
+                    className="flex transition-transform duration-500 ease-in-out"
                     style={{ transform: `translateX(-${currentIndex * (100 / cardsPerSlide)}%)` }}
                 >
                     {reviews.map((review, idx) => (
@@ -128,40 +122,31 @@ const Reviews = () => {
                             className={`flex-shrink-0 w-full px-2 md:px-3 ${
                                 cardsPerSlide === 3 ? 'md:w-1/3' : cardsPerSlide === 2 ? 'md:w-1/2' : 'w-full'
                             }`}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 12 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                            transition={{ duration: 0.4, delay: idx * 0.05 }}
                         >
                             <div
-                                className="rounded-2xl p-6 md:p-7 h-full flex flex-col transition-all duration-300 hover:shadow-lg"
-                                style={{
-                                    background: 'rgba(255, 255, 255, 0.85)',
-                                    border: '1px solid rgba(16, 185, 129, 0.1)',
-                                    backdropFilter: 'blur(10px)',
-                                    WebkitBackdropFilter: 'blur(10px)'
-                                }}
+                                className="rounded-xl p-6 md:p-7 h-full flex flex-col transition-all duration-300 hover:border-emerald-300 hover:shadow-md bg-white border border-slate-200"
                             >
-                                {/* Star Rating - Top */}
-                                <div className="mb-4 flex items-center gap-1">
+                                {/* Star Rating */}
+                                <div className="mb-3 flex items-center gap-1">
                                     <StarRating rating={review.rating} />
                                 </div>
 
-                                {/* Comment Text */}
-                                <p className="text-slate-700 text-sm md:text-base leading-relaxed flex-grow mb-5 font-medium">
+                                {/* Comment */}
+                                <p className="text-slate-700 text-sm md:text-base leading-relaxed flex-grow mb-4">
                                     "{review.comment}"
                                 </p>
 
-                                {/* Divider */}
-                                <div className="h-px bg-gradient-to-r from-transparent via-green-200 to-transparent mb-4"></div>
-
-                                {/* Name and Badge */}
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-lg font-bold text-slate-900">
+                                {/* Name */}
+                                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                                    <h3 className="font-semibold text-slate-900">
                                         {review.name}
                                     </h3>
-                                    <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-green-50 border border-green-200">
-                                        <span className="text-xs font-semibold text-green-700">{review.rating}/5</span>
+                                    <div className="text-xs font-semibold text-emerald-600">
+                                        ★ {review.rating}/5
                                     </div>
                                 </div>
                             </div>
@@ -170,58 +155,36 @@ const Reviews = () => {
                 </div>
 
                 {/* Navigation Arrows */}
-                <motion.button
+                <button
                     onClick={goToPreviousSlide}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 glass-button-primary p-3 z-10 hidden md:flex items-center justify-center"
+                    className="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 p-2 md:p-3 z-10 hidden md:flex items-center justify-center text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-300"
+                    aria-label="Previous testimonials"
                 >
                     <FaChevronLeft size={20} />
-                </motion.button>
-                <motion.button
+                </button>
+                <button
                     onClick={goToNextSlide}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 glass-button-primary p-3 z-10 hidden md:flex items-center justify-center"
+                    className="absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 p-2 md:p-3 z-10 hidden md:flex items-center justify-center text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-300"
+                    aria-label="Next testimonials"
                 >
                     <FaChevronRight size={20} />
-                </motion.button>
+                </button>
             </div>
 
             {/* Dots Indicator for Mobile */}
-            <div className="flex justify-center gap-2 mt-6 md:hidden">
+            <div className="flex justify-center gap-2 mt-8 md:hidden">
                 {[...Array(Math.ceil(totalReviews / cardsPerSlide))].map((_, idx) => (
-                    <motion.button
+                    <button
                         key={idx}
                         onClick={() => setCurrentIndex(idx * cardsPerSlide)}
-                        className={`w-2 h-2 rounded-full transition-all ${
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
                             Math.floor(currentIndex / cardsPerSlide) === idx
-                                ? 'bg-zetech-primary w-8'
-                                : 'bg-slate-300 dark:bg-slate-600'
+                                ? 'bg-emerald-600 w-6'
+                                : 'bg-slate-300'
                         }`}
-                        whileHover={{ scale: 1.2 }}
                     />
                 ))}
             </div>
-
-            {/* Footer Section */}
-            <motion.div
-                className="text-center mt-14"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-            >
-                <Link to="/addReview">
-                    <motion.button
-                        whileHover={{ scale: 1.05, boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)' }}
-                        whileTap={{ scale: 0.98 }}
-                        className="glass-button-primary px-8 py-3.5 text-white font-semibold rounded-xl text-base"
-                    >
-                        Share Your Experience
-                    </motion.button>
-                </Link>
-            </motion.div>
         </div>
     );
 };
