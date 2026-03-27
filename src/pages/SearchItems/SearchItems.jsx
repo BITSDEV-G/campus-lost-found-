@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import { schoolConfig } from '../../config/schoolConfig';
 import { FaSearch, FaFilter, FaTimes } from 'react-icons/fa';
 import toast from 'react-hot-toast';
@@ -7,6 +8,7 @@ import AuthContext from '../../context/Authcontext/AuthContext';
 
 const SearchItems = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -69,13 +71,8 @@ const SearchItems = () => {
     setFilteredItems(filtered);
   };
 
-  const handleClaimItem = (itemId) => {
-    if (!user) {
-      toast.error('Please sign in to claim items');
-      return;
-    }
-    // Navigate to claim page or open claim modal
-    window.location.href = `/claim/${itemId}`;
+  const handleViewDetails = (itemId) => {
+    navigate(`/app/item-details/${itemId}`);
   };
 
   const clearFilters = () => {
@@ -214,7 +211,7 @@ const SearchItems = () => {
               <ItemCard
                 key={item._id}
                 item={item}
-                onClaim={handleClaimItem}
+                onViewDetails={handleViewDetails}
               />
             ))}
           </div>
@@ -225,18 +222,18 @@ const SearchItems = () => {
 };
 
 // Item Card Component
-const ItemCard = ({ item, onClaim }) => {
+const ItemCard = ({ item, onViewDetails }) => {
   const imageUrl = item.images && item.images.length > 0 ? item.images[0] : item.image;
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden border-l-4 border-teal-500">
       {/* Image */}
-      <div className="h-48 bg-gray-200 overflow-hidden">
+      <div className="h-48 bg-gray-200 overflow-hidden cursor-pointer" onClick={() => onViewDetails(item._id)}>
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={item.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover hover:scale-105 transition"
             onError={(e) => {
               e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect fill="%23e2e8f0" width="300" height="200"/><text x="150" y="100" text-anchor="middle" fill="%2364748b">No Image</text></svg>';
             }}
@@ -265,10 +262,10 @@ const ItemCard = ({ item, onClaim }) => {
         </div>
 
         <button
-          onClick={() => onClaim(item._id)}
+          onClick={() => onViewDetails(item._id)}
           className="w-full px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-lg font-semibold transition"
         >
-          Claim Item
+          View Details
         </button>
       </div>
     </div>

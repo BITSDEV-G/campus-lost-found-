@@ -180,6 +180,23 @@ const router = createBrowserRouter([
       },
     ]
   },
+
+  // ============================================
+  // APP PREFIXED ROUTES - Alternative path for item details
+  // ============================================
+  {
+    path: "/app",
+    element: <PublicLayout />,
+    children: [
+      {
+        path: "item-details/:id",
+        element: <PrivateRoute><PostDetails /></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3001/api/items/${params.id}`).then(res => res.json()).then(data => {
+          return Array.isArray(data) ? data[0] : data.data || data;
+        })
+      },
+    ]
+  },
 ]);
 
 export default router;
