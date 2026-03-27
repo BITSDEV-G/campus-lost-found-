@@ -62,38 +62,39 @@ const Banner = () => {
                   ease: 'easeInOut',
                 }}
               >
-              <div className="w-full md:w-1/2 text-left">
-                <motion.h1
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0, duration: 0.3 }}
-                >
-                  {slide.title}
-                </motion.h1>
-                <motion.p
-                  className="text-slate-600 text-base md:text-lg leading-relaxed"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0, duration: 0.3 }}
-                >
-                  {slide.description}
-                </motion.p>
-              </div>
-              <div className="w-full md:w-1/2 flex justify-center items-center">
-                <motion.div
-                  className="bg-white rounded-full p-4 md:p-6 shadow-sm"
-                  initial={{ scale: 1, opacity: 1 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0, duration: 0.3 }}
-                >
-                  <Lottie className="w-full max-w-xs" animationData={slide.animation} loop={true} />
-                </motion.div>
-              </div>
+                <div className="w-full md:w-1/2 text-left">
+                  <motion.h1
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0, duration: 0.3 }}
+                  >
+                    {slide.title}
+                  </motion.h1>
+                  <motion.p
+                    className="text-slate-600 text-base md:text-lg leading-relaxed"
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0, duration: 0.3 }}
+                  >
+                    {slide.description}
+                  </motion.p>
+                </div>
+                <div className="w-full md:w-1/2 flex justify-center items-center">
+                  <motion.div
+                    className="bg-white rounded-full p-4 md:p-6 shadow-sm"
+                    initial={{ scale: 1, opacity: 1 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0, duration: 0.3 }}
+                  >
+                    <Lottie className="w-full max-w-xs" animationData={slide.animation} loop={true} />
+                  </motion.div>
+                </div>
               </motion.div>
             </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 };
