@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import AuthContext from "../../context/Authcontext/AuthContext";
 import { FaBars, FaTimes, FaHome, FaPlus, FaSearch, FaUser, FaSignOutAlt, FaShieldAlt } from "react-icons/fa";
+import NotificationsDropdown from "../../components/NotificationsDropdown";
 
 const DashboardNavbar = ({ onToggleSidebar }) => {
     const { user, signOutUser, isAdmin } = useContext(AuthContext);
@@ -95,6 +96,7 @@ const DashboardNavbar = ({ onToggleSidebar }) => {
 
                     {/* User Menu */}
                     <div className="flex items-center gap-2">
+                        <NotificationsDropdown />
                         <button
                             ref={buttonRef}
                             onClick={toggleMenu}

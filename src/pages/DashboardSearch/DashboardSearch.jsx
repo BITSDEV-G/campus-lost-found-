@@ -5,7 +5,11 @@ import { Helmet } from 'react-helmet-async';
 import { schoolConfig } from '../../config/schoolConfig';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { FaSearch, FaFilter, FaBox, FaTimes, FaMapPin, FaCalendarAlt, FaTag } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaBox, FaTimes, FaMapPin, FaCalendarAlt, FaTag, FaSort, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import PaginationComponent from '../../components/PaginationComponent';
+import BookmarkButton from '../../components/BookmarkButton';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const DashboardSearch = () => {
   const { user } = useContext(AuthContext);
@@ -14,10 +18,17 @@ const DashboardSearch = () => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState('recent');
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const itemsPerPage = 12;
   const [filters, setFilters] = useState({
     itemType: 'all',
     status: 'all',
-    category: 'all'
+    category: 'all',
+    dateFrom: null,
+    dateTo: null,
+    condition: 'all'
   });
 
   const categories = ['Electronics', 'Clothing', 'Books', 'Accessories', 'Documents', 'Other'];
@@ -34,7 +45,7 @@ const DashboardSearch = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [searchTerm, filters, items]);
+  }, [searchTerm, filters, items, sortBy]);
 
   const fetchItems = async () => {
     try {
@@ -75,7 +86,27 @@ const DashboardSearch = () => {
       filtered = filtered.filter(item => item.status?.toLowerCase() === filters.status.toLowerCase());
     }
 
+    // Date range filter
+    if (filters.dateFrom) {
+      filtered = filtered.filter(item => new Date(item.createdAt) >= filters.dateFrom);
+    }
+    if (filters.dateTo) {
+      filtered = filtered.filter(item => new Date(item.createdAt) <= filters.dateTo);
+    }
+
+    // Sort
+    if (sortBy === 'recent') {
+      filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (sortBy === 'oldest') {
+      filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else if (sortBy === 'title-asc') {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortBy === 'title-desc') {
+      filtered.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
     setFilteredItems(filtered);
+    setCurrentPage(1);
   };
 
   const ItemCard = ({ item }) => (
@@ -95,6 +126,14 @@ const DashboardSearch = () => {
           }`}>
             {item.itemType}
           </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="absolute top-3 left-3"
+          >
+            <BookmarkButton itemId={item._id} size="md" />
+          </button>
         </div>
       )}
 
@@ -169,31 +208,91 @@ const DashboardSearch = () => {
         </div>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {[
-            { key: 'itemType', label: 'Item Type', options: itemTypes },
-            { key: 'category', label: 'Category', options: categories },
-            { key: 'status', label: 'Status', options: statuses }
-          ].map(filterGroup => (
-            <div key={filterGroup.key} className="bg-white rounded-lg border border-gray-200 p-4">
+        <div className="space-y-4 mb-6">
+          {/* Basic Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[
+              { key: 'itemType', label: 'Item Type', options: itemTypes },
+              { key: 'category', label: 'Category', options: categories },
+              { key: 'status', label: 'Status', options: statuses }
+            ].map(filterGroup => (
+              <div key={filterGroup.key} className="bg-white rounded-lg border border-gray-200 p-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <FaFilter className="w-4 h-4" />
+                  {filterGroup.label}
+                </label>
+                <select
+                  value={filters[filterGroup.key]}
+                  onChange={(e) => setFilters({ ...filters, [filterGroup.key]: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white"
+                >
+                  <option value="all">All {filterGroup.label}</option>
+                  {filterGroup.options.map(option => (
+                    <option key={option} value={option.toLowerCase()}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+
+            {/* Sort */}
+            <div className="bg-white rounded-lg border border-gray-200 p-4">
               <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                <FaFilter className="w-4 h-4" />
-                {filterGroup.label}
+                <FaSort className="w-4 h-4" />
+                Sort By
               </label>
               <select
-                value={filters[filterGroup.key]}
-                onChange={(e) => setFilters({ ...filters, [filterGroup.key]: e.target.value })}
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white"
               >
-                <option value="all">All {filterGroup.label}</option>
-                {filterGroup.options.map(option => (
-                  <option key={option} value={option.toLowerCase()}>
-                    {option}
-                  </option>
-                ))}
+                <option value="recent">Most Recent</option>
+                <option value="oldest">Oldest</option>
+                <option value="title-asc">Title (A-Z)</option>
+                <option value="title-desc">Title (Z-A)</option>
               </select>
             </div>
-          ))}
+          </div>
+
+          {/* Advanced Filters Toggle */}
+          <button
+            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            className="flex items-center gap-2 px-4 py-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-300 font-medium"
+          >
+            <FaFilter size={16} />
+            {showAdvancedFilters ? 'Hide' : 'Show'} Advanced Filters
+          </button>
+
+          {/* Advanced Filters */}
+          {showAdvancedFilters && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date From</label>
+                <DatePicker
+                  selected={filters.dateFrom}
+                  onChange={(date) => setFilters({ ...filters, dateFrom: date })}
+                  placeholderText="Select start date"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date To</label>
+                <DatePicker
+                  selected={filters.dateTo}
+                  onChange={(date) => setFilters({ ...filters, dateTo: date })}
+                  placeholderText="Select end date"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <button
+                onClick={() => setFilters({ ...filters, dateFrom: null, dateTo: null })}
+                className="col-span-1 md:col-span-2 px-4 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300"
+              >
+                Clear Date Filters
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Results */}
@@ -215,11 +314,22 @@ const DashboardSearch = () => {
             <p className="text-sm text-gray-600 mb-4">
               Found <span className="font-semibold text-gray-900">{filteredItems.length}</span> item{filteredItems.length !== 1 ? 's' : ''}
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredItems.map(item => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              {filteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(item => (
                 <ItemCard key={item._id} item={item} />
               ))}
             </div>
+
+            {/* Pagination */}
+            {Math.ceil(filteredItems.length / itemsPerPage) > 1 && (
+              <PaginationComponent
+                currentPage={currentPage}
+                totalPages={Math.ceil(filteredItems.length / itemsPerPage)}
+                totalItems={filteredItems.length}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+              />
+            )}
           </>
         )}
       </div>

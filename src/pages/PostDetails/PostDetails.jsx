@@ -8,9 +8,11 @@ import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { schoolConfig } from '../../config/schoolConfig';
-import { FaCheckCircle, FaClock, FaShieldAlt, FaEdit, FaTrash, FaChevronLeft, FaChevronRight, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { FaCheckCircle, FaClock, FaShieldAlt, FaEdit, FaTrash, FaChevronLeft, FaChevronRight, FaPhone, FaEnvelope, FaShare2, FaExpandAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import ClaimItemModal from '../../components/ClaimItemModal';
+import ImageLightbox from '../../components/ImageLightbox';
+import BookmarkButton from '../../components/BookmarkButton';
 
 const PostDetails = () => {
   const { user, isAdmin } = useContext(AuthContext);
@@ -19,6 +21,7 @@ const PostDetails = () => {
   const isVerified = item.verificationStatus === 'verified';
   const [showModal, setShowModal] = useState(false);
   const [showClaimModal, setShowClaimModal] = useState(false);
+  const [showLightbox, setShowLightbox] = useState(false);
   const [recoveredLocation, setRecoveredLocation] = useState('');
   const [recoveredDate, setRecoveredDate] = useState(new Date());
   const [isRecovered, setIsRecovered] = useState(item.itemType === 'Recovered');
@@ -127,12 +130,12 @@ const PostDetails = () => {
         {/* Image Gallery Section */}
         <div className="w-full md:w-1/2">
           {/* Main Image */}
-          <div className="relative w-full h-96 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg shadow-md overflow-hidden flex items-center justify-center mb-4">
+          <div className="relative w-full h-96 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg shadow-md overflow-hidden flex items-center justify-center mb-4 group cursor-pointer" onClick={() => setShowLightbox(true)}>
             {images.length > 0 ? (
               <img
                 src={images[currentImageIndex]}
                 alt={item.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   const placeholder = e.target.parentElement?.querySelector('[data-placeholder="true"]');
@@ -167,13 +170,19 @@ const PostDetails = () => {
             {images.length > 1 && (
               <>
                 <button
-                  onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+                  }}
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition"
                 >
                   <FaChevronLeft size={20} />
                 </button>
                 <button
-                  onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+                  }}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition"
                 >
                   <FaChevronRight size={20} />
@@ -182,6 +191,17 @@ const PostDetails = () => {
                   {currentImageIndex + 1} / {images.length}
                 </div>
               </>
+            )}
+
+            {/* Expand Button */}
+            {images.length > 0 && (
+              <button
+                onClick={() => setShowLightbox(true)}
+                className="absolute top-3 right-3 p-2 bg-white/80 hover:bg-white text-slate-900 rounded-lg transition-colors duration-300"
+                title="Expand image"
+              >
+                <FaExpandAlt size={18} />
+              </button>
             )}
           </div>
 
@@ -288,6 +308,33 @@ const PostDetails = () => {
       </div>
 
       <div className="mt-8 space-y-4">
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-3 mb-6">
+          <button
+            onClick={() => {
+              const shareText = `Check out this ${item.itemType} item on ${schoolConfig.name}: ${item.title}`;
+              const shareUrl = window.location.href;
+              
+              if (navigator.share) {
+                navigator.share({
+                  title: item.title,
+                  text: shareText,
+                  url: shareUrl,
+                });
+              } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+                toast.success('Link copied to clipboard!');
+              }
+            }}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-300 text-emerald-600 hover:bg-emerald-50 transition-colors duration-300 font-medium"
+          >
+            <FaShare2 size={16} />
+            Share Item
+          </button>
+          <BookmarkButton itemId={item._id} size="md" showLabel={true} />
+        </div>
+
         {/* Claim / Response Actions */}
         {!isItemOwner && item.status !== 'recovered' && item.verificationStatus === 'verified' && (
           <div className="bg-gradient-to-r from-teal-50 to-blue-50 border border-teal-200 rounded-lg p-6">
@@ -298,6 +345,12 @@ const PostDetails = () => {
             </p>
             <button
               onClick={() => setShowClaimModal(true)}
+              className="w-full md:w-auto px-6 py-3 text-white bg-teal-600 hover:bg-teal-700 rounded-lg shadow-lg hover:shadow-xl transition font-medium"
+            >
+              {item.itemType === 'lost' ? 'Found This Item!' : 'Claim This Item'}
+            </button>
+          </div>
+        )}
               className="w-full md:w-auto px-6 py-3 text-white bg-teal-600 hover:bg-teal-700 rounded-lg shadow-lg hover:shadow-xl transition font-medium"
             >
               {item.itemType === 'lost' ? 'Found This Item!' : 'Claim This Item'}
@@ -340,6 +393,14 @@ const PostDetails = () => {
         )}
       </div>
 
+
+      {/* Image Lightbox */}
+      <ImageLightbox
+        images={images}
+        initialIndex={currentImageIndex}
+        isOpen={showLightbox}
+        onClose={() => setShowLightbox(false)}
+      />
 
       {/* Claim Item Modal */}
       <ClaimItemModal
