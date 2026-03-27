@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import Lottie from 'lottie-react';
 
@@ -43,6 +44,7 @@ const slidesData = [
 ];
 
 const Banner = memo(function Banner() {
+  const navigate = useNavigate();
   const settings = useMemo(
     () => ({
       dots: true,
@@ -93,6 +95,7 @@ const Banner = memo(function Banner() {
                       <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
                         <button
                           type="button"
+                          onClick={() => navigate('/app/post-item')}
                           className="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-300 md:text-base"
                         >
                           Report Lost Item
@@ -100,6 +103,7 @@ const Banner = memo(function Banner() {
 
                         <button
                           type="button"
+                          onClick={() => navigate('/search')}
                           className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition-colors duration-200 hover:border-emerald-200 hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-200 md:text-base"
                         >
                           Browse Found Items
