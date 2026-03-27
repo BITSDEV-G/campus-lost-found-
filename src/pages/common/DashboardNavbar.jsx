@@ -72,21 +72,21 @@ const DashboardNavbar = ({ onToggleSidebar }) => {
                     <div className="hidden md:flex items-center gap-4">
                         <Link
                             to="/app/dashboard"
-                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-teal-600 transition"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600 transition"
                         >
                             <FaHome className="w-4 h-4" />
                             Dashboard
                         </Link>
                         <Link
                             to="/app/search"
-                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-teal-600 transition"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600 transition"
                         >
                             <FaSearch className="w-4 h-4" />
                             Search
                         </Link>
                         <Link
                             to="/app/post-item"
-                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-teal-600 transition"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600 transition"
                         >
                             <FaPlus className="w-4 h-4" />
                             Post

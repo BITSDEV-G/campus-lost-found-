@@ -75,9 +75,9 @@ const DashboardActivity = () => {
           title: `Message from ${msg.senderName || msg.senderEmail}`,
           description: 'New message received',
           icon: FaComments,
-          bgColor: msg.isRead ? 'bg-gray-100' : 'bg-teal-100',
-          textColor: msg.isRead ? 'text-gray-700' : 'text-teal-700',
-          iconBg: msg.isRead ? 'bg-gray-600' : 'bg-teal-600',
+          bgColor: msg.isRead ? 'bg-gray-100' : 'bg-emerald-100',
+          textColor: msg.isRead ? 'text-gray-700' : 'text-emerald-700',
+          iconBg: msg.isRead ? 'bg-gray-600' : 'bg-emerald-600',
           date: msg.createdAt,
           details: msg.isRead ? 'Read' : 'Unread'
         }))
@@ -133,10 +133,10 @@ const DashboardActivity = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard label="Total Activities" value={stats.total} icon={FaHistory} bgColor="bg-teal-50" textColor="text-teal-700" />
-          <StatCard label="Items Posted" value={stats.items} icon={FaBox} bgColor="bg-blue-50" textColor="text-blue-700" />
+          <StatCard label="Total Activities" value={stats.total} icon={FaHistory} bgColor="bg-emerald-50" textColor="text-emerald-700" />
+          <StatCard label="Items Posted" value={stats.items} icon={FaBox} bgColor="bg-emerald-50" textColor="text-emerald-700" />
           <StatCard label="Claims" value={stats.claims} icon={FaCheckCircle} bgColor="bg-green-50" textColor="text-green-700" />
-          <StatCard label="Messages" value={stats.messages} icon={FaComments} bgColor="bg-purple-50" textColor="text-purple-700" />
+          <StatCard label="Messages" value={stats.messages} icon={FaComments} bgColor="bg-teal-50" textColor="text-teal-700" />
         </div>
 
         {/* Filter Buttons */}
@@ -154,8 +154,8 @@ const DashboardActivity = () => {
                 onClick={() => setFilter(btn.id)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition ${
                   filter === btn.id
-                    ? 'bg-teal-600 text-white shadow-md'
-                    : 'bg-white border border-gray-200 text-gray-700 hover:border-teal-300'
+                    ? 'bg-emerald-600 text-white shadow-md'
+                    : 'bg-white border border-gray-200 text-gray-700 hover:border-emerald-300'
                 }`}
               >
                 <BtnIcon className="w-4 h-4" />
@@ -169,7 +169,7 @@ const DashboardActivity = () => {
         {loading ? (
           <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
             <div className="inline-block">
-              <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
             </div>
             <p className="text-gray-600 mt-4">Loading activity...</p>
           </div>

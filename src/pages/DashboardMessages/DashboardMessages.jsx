@@ -138,7 +138,7 @@ const DashboardMessages = () => {
               onClick={() => setFilter(tab.id)}
               className={`px-4 py-3 font-medium border-b-2 transition ${
                 filter === tab.id
-                  ? 'border-teal-600 text-teal-600'
+                  ? 'border-emerald-600 text-emerald-600'
                   : 'border-transparent text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -150,7 +150,7 @@ const DashboardMessages = () => {
         {loading ? (
           <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
             <div className="inline-block">
-              <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
             </div>
             <p className="text-gray-600 mt-4">Loading messages...</p>
           </div>
@@ -172,12 +172,12 @@ const DashboardMessages = () => {
                       setSelectedMessage(message);
                     }}
                     className={`w-full p-4 text-left hover:bg-gray-50 transition ${
-                      selectedMessage?._id === message._id ? 'bg-teal-50' : ''
-                    } ${!message.isRead ? 'bg-teal-50' : ''}`}
+                      selectedMessage?._id === message._id ? 'bg-emerald-50' : ''
+                    } ${!message.isRead ? 'bg-emerald-50' : ''}`}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-teal-100">
-                        <FaUser className="w-4 h-4 text-teal-600" />
+                      <div className="p-2 rounded-lg bg-emerald-100">
+                        <FaUser className="w-4 h-4 text-emerald-600" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className={`font-medium text-gray-900 truncate ${!message.isRead ? 'font-bold' : ''}`}>
@@ -189,7 +189,7 @@ const DashboardMessages = () => {
                         </p>
                       </div>
                       {!message.isRead && (
-                        <div className="w-2 h-2 rounded-full bg-teal-600 flex-shrink-0 mt-2"></div>
+                        <div className="w-2 h-2 rounded-full bg-emerald-600 flex-shrink-0 mt-2"></div>
                       )}
                     </div>
                   </button>
@@ -204,8 +204,8 @@ const DashboardMessages = () => {
                   {/* Message Header */}
                   <div className="flex items-start justify-between mb-6 pb-6 border-b border-gray-200">
                     <div className="flex items-start gap-4">
-                      <div className="p-3 rounded-lg bg-teal-100">
-                        <FaEnvelope className="w-6 h-6 text-teal-600" />
+                      <div className="p-3 rounded-lg bg-emerald-100">
+                        <FaEnvelope className="w-6 h-6 text-emerald-600" />
                       </div>
                       <div>
                         <h2 className="text-xl font-bold text-gray-900">
@@ -257,12 +257,12 @@ const DashboardMessages = () => {
                       value={replyText}
                       onChange={(e) => setReplyText(e.target.value)}
                       placeholder="Type your reply..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
                       rows="4"
                     />
                     <button
                       onClick={handleReply}
-                      className="mt-3 flex items-center gap-2 px-6 py-2.5 bg-teal-600 text-white hover:bg-teal-700 rounded-lg transition font-medium"
+                      className="mt-3 flex items-center gap-2 px-6 py-2.5 bg-emerald-600 text-white hover:bg-emerald-700 rounded-lg transition font-medium"
                     >
                       <FaReply className="w-4 h-4" />
                       Send Reply

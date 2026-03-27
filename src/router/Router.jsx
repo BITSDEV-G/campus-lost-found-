@@ -34,7 +34,6 @@ import DashboardSearch from "../pages/DashboardSearch/DashboardSearch";
 import DashboardMessages from "../pages/DashboardMessages/DashboardMessages";
 import DashboardActivity from "../pages/DashboardActivity/DashboardActivity";
 import AdminLogin from "../pages/AdminLogin/AdminLogin";
-import PostLostItem from "../pages/PostLostItem/PostLostItem";
 
 // Route Guards
 import PrivateRoute from "./PrivetRoute";
@@ -121,10 +120,6 @@ const router = createBrowserRouter([
       {
         path: 'post-item',
         element: <UserRoute><AddItems /></UserRoute>,
-      },
-      {
-        path: 'post-lost-item',
-        element: <UserRoute><PostLostItem /></UserRoute>,
       },
       {
         path: 'search',

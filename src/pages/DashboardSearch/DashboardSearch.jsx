@@ -105,7 +105,7 @@ const DashboardSearch = () => {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-3">
-          <span className="inline-flex items-center gap-1 text-xs bg-teal-100 text-teal-700 px-2.5 py-1 rounded-full">
+          <span className="inline-flex items-center gap-1 text-xs bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">
             <FaTag className="w-3 h-3" />
             {item.category}
           </span>
@@ -183,7 +183,7 @@ const DashboardSearch = () => {
               <select
                 value={filters[filterGroup.key]}
                 onChange={(e) => setFilters({ ...filters, [filterGroup.key]: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white"
               >
                 <option value="all">All {filterGroup.label}</option>
                 {filterGroup.options.map(option => (
@@ -200,7 +200,7 @@ const DashboardSearch = () => {
         {loading ? (
           <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
             <div className="inline-block mb-4">
-              <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
             </div>
             <p className="text-gray-600">Loading items...</p>
           </div>

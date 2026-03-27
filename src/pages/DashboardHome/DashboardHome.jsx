@@ -26,28 +26,28 @@ const DashboardHome = () => {
       description: 'Find lost or found items on campus',
       path: '/app/search',
       icon: FaSearch,
-      color: 'bg-blue-50 text-blue-600'
+      color: 'bg-emerald-50 text-emerald-600'
     },
     {
-      title: 'Post Lost Item',
-      description: 'Report a lost item and help find it',
-      path: '/app/post-lost-item',
+      title: 'Post Item',
+      description: 'Report a lost or found item',
+      path: '/app/post-item',
       icon: FaPlus,
       color: 'bg-teal-50 text-teal-600'
-    },
-    {
-      title: 'Post Found Item',
-      description: 'Share a found item with the community',
-      path: '/app/post-item',
-      icon: FaBox,
-      color: 'bg-green-50 text-green-600'
     },
     {
       title: 'My Items',
       description: 'Manage your postings',
       path: '/app/my-items',
+      icon: FaBox,
+      color: 'bg-emerald-50 text-emerald-600'
+    },
+    {
+      title: 'View Recovered',
+      description: 'Check recovered items',
+      path: '/app/recovered',
       icon: FaEye,
-      color: 'bg-purple-50 text-purple-600'
+      color: 'bg-teal-50 text-teal-600'
     },
   ]);
 
@@ -164,7 +164,7 @@ const DashboardHome = () => {
           label="Items Posted"
           value={stats.itemsPosted}
           icon={FaBox}
-          accentColor="text-teal-600"
+          accentColor="text-emerald-600"
           link="/app/my-items"
         />
         <StatCard
@@ -192,14 +192,14 @@ const DashboardHome = () => {
           label="Items Recovered"
           value={stats.itemsRecovered}
           icon={FaEye}
-          accentColor="text-cyan-600"
+          accentColor="text-teal-600"
           link="/app/recovered"
         />
         <StatCard
           label="New Messages"
           value={stats.unreadMessages}
           icon={FaComments}
-          accentColor="text-blue-600"
+          accentColor="text-emerald-600"
           link="/app/messages"
         />
       </div>
@@ -216,8 +216,8 @@ const DashboardHome = () => {
                 to={link.path}
                 className="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-md hover:border-gray-200 transition group"
               >
-                <div className="p-3 rounded-lg bg-teal-50 w-fit mb-3 group-hover:bg-teal-100 transition">
-                  <Icon className="w-6 h-6 text-teal-600" />
+                <div className="p-3 rounded-lg bg-emerald-50 w-fit mb-3 group-hover:bg-emerald-100 transition">
+                  <Icon className="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">{link.title}</h3>
                 <p className="text-sm text-gray-600">{link.description}</p>
@@ -239,8 +239,8 @@ const DashboardHome = () => {
                   key={idx}
                   className="flex items-center gap-4 p-5 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition"
                 >
-                  <div className="p-2.5 rounded-lg bg-teal-50">
-                    <Icon className="w-5 h-5 text-teal-600" />
+                  <div className="p-2.5 rounded-lg bg-emerald-50">
+                    <Icon className="w-5 h-5 text-emerald-600" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900">{activity.title}</h3>
@@ -261,7 +261,7 @@ const DashboardHome = () => {
             <p className="text-gray-600 mb-4">No recent activity yet. Start by posting or searching for items!</p>
             <Link
               to="/app/search"
-              className="inline-block px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium transition"
+              className="inline-block px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition"
             >
               Browse Items
             </Link>
